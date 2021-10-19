@@ -1595,7 +1595,7 @@ function omciproto.dissector (buffer, pinfo, tree)
 		msg_type_mt = "ONU< " .. msg_type_mt .. " response"		
 	end
 
-	while msg_type_mt:len() < 25 do  -- Padding to align ME classes
+	while msg_type_mt:len() < 30 do  -- Padding to align ME classes
 		msg_type_mt = msg_type_mt .. " "
 	end
     pinfo.cols.info:set(msg_type_mt .. " - " .. me_class_name)
