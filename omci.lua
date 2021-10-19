@@ -1332,9 +1332,9 @@ setmetatable(omci_def, mt2)
 -- GUI field definition
 local f = omciproto.fields
 f.tci = ProtoField.uint16("omciproto.tci", "Transaction Correlation ID")
-f.msg_type_db = ProtoField.uint8("omciproto.msg_type_db", "Destination Bit", base.HEX, nil, 0x80)
-f.msg_type_ar = ProtoField.uint8("omciproto.msg_type_ar", "Acknowledge Request", base.HEX, nil, 0x40)
-f.msg_type_ak = ProtoField.uint8("omciproto.msg_type_ak", "Acknowledgement", base.HEX, nil, 0x20)
+f.msg_type_db = ProtoField.uint8("omciproto.msg_type_db", "reserved", base.HEX, nil, 0x80)
+f.msg_type_ar = ProtoField.uint8("omciproto.msg_type_ar", "AR", base.HEX, nil, 0x40)
+f.msg_type_ak = ProtoField.uint8("omciproto.msg_type_ak", "AK", base.HEX, nil, 0x20)
 f.msg_type_mt = ProtoField.uint8("omciproto.msg_type_mt", "Message Type", base.DEC, msgtype, 0x1F)
 f.dev_id = ProtoField.uint8("omciproto.dev_id", "Device Identifier", base.HEX)
 f.me_id = ProtoField.uint16("omciproto.me_id", "Managed Entity Instance", base.HEX)
@@ -1585,10 +1585,14 @@ function omciproto.dissector (buffer, pinfo, tree)
 		trailer_subtree:add(f.crc32, trailer(4,4))
 	end
 
-	if( msg_type_ar == 0 ) then
-		msg_type_mt = "ONU< " .. msg_type_mt
-	else 
+	--如果AR为1，则一定是OLT发出的
+	if( msg_type_ar == 1 ) then
 		msg_type_mt = "OLT> " .. msg_type_mt
+	end
+
+	--如果AK为1，则一定是ONU发出的，并且是一个response
+	if( msg_type_ak == 1 ) then
+		msg_type_mt = "ONU< " .. msg_type_mt .. " response"		
 	end
 
 	while msg_type_mt:len() < 25 do  -- Padding to align ME classes
