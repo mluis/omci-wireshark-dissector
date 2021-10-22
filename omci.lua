@@ -1009,6 +1009,28 @@ local omci_def = {
 		{ attname="SONET class shedding interval", length=2, setbycreate=false },
 		{ attname="Shedding status", length=2, setbycreate=false }},
 
+
+	[134] = { 
+		me_class_name = "IP host config data",
+		{ attname="IP options", length=1, setbycreate=false },
+		{ attname="MAC address", length=6, setbycreate=false },
+		{ attname="Onu identifier", length=25, setbycreate=false },
+		{ attname="IP address", length=4, setbycreate=false },
+		{ attname="Mask", length=4, setbycreate=false },
+		{ attname="Gateway", length=4, setbycreate=false },
+		{ attname="Primary DNS", length=4, setbycreate=false },
+		{ attname="Secondary DNS", length=4, setbycreate=false },
+		{ attname="Current address", length=4, setbycreate=false },
+		{ attname="Current Mask", length=4, setbycreate=false },
+		{ attname="Current Gateway", length=4, setbycreate=false },
+		{ attname="Current Primary DNS", length=4, setbycreate=false },
+		{ attname="Current Secondary DNS", length=4, setbycreate=false },
+		{ attname="Domain name", length=25, setbycreate=false },
+		{ attname="Host name", length=25, setbycreate=false },
+		{ attname="Relay agent options", length=2, setbycreate=false },
+	},
+
+
 	[140] = { me_class_name = "Call control performance monitoring history data",
 		{ attname="Interval end time", length=1, setbycreate=false },
 		{ attname="Threshold data 1 ID", length=2, setbycreate=true }},
@@ -1309,6 +1331,35 @@ local omci_def = {
 		{ attname="Packets 512 to 1023 Octets", length=4, setbycreate=false },
 		{ attname="Packets 1024 to 1518 Octets", length=4, setbycreate=false }},
 
+
+	[329] = { 
+	    me_class_name = "Virtual Ethernet interface point",
+		{ attname="Administrative state", length=1, setbycreate=false },
+		{ attname="Operational state", length=1, setbycreate=false },
+		{ attname="Interdomain name", length=25, setbycreate=false },
+		{ attname="TCP/UDP pointer", length=2, setbycreate=false },
+		{ attname="IANA assigned port", length=2, setbycreate=false },
+	},
+
+
+	[332] = { 
+	    me_class_name = "Enhanced security control",
+		{ attname="OLT crypto capabilities", length=16, setbycreate=false },
+		{ attname="OLT random challenge table", length=17, setbycreate=false },
+		{ attname="OLT challenge status", length=1, setbycreate=false },
+		{ attname="ONU selected crypto capabilities", length=1, setbycreate=false },
+		{ attname="ONU random challenge table", length=16, setbycreate=false },
+		{ attname="ONU authentication result table", length=16, setbycreate=false },
+		{ attname="OLT authentication result table", length=17, setbycreate=false },
+		{ attname="OLT result status", length=1, setbycreate=false },
+		{ attname="ONU authentication status", length=1, setbycreate=false },
+		{ attname="Master session key name", length=16, setbycreate=false },
+		{ attname="Broadcast key table", length=18, setbycreate=false },
+		{ attname="Effective key length", length=2, setbycreate=false },
+	},
+
+
+
 	[334] = { me_class_name = "Ethernet frame extended PM",
 		{ attname="Interval end time", length=1, setbycreate=false },
 		{ attname="Threshold data 1 ID", length=2, setbycreate=true },
@@ -1320,10 +1371,36 @@ local omci_def = {
 		{ attname="TCI", length=2, setbycreate=true },
 		{ attname="Reserved", length=2, setbycreate=true }},
 
+	[340] = { 
+	    me_class_name = "BBF TR-069 management server",
+		{ attname="Administrative state", length=1, setbycreate=false },
+		{ attname="ACS network address", length=2, setbycreate=false },
+		{ attname="Associated tag", length=2, setbycreate=false },
+	},
+
+
 	[341] = { 
 	    me_class_name = "GEM port network CTP performance monitoring history data",
 		{ attname="Interval end time", length=1, setbycreate=false },
 		{ attname="Threshold data 1 ID", length=2, setbycreate=true },
+	},
+
+
+	[347] = { me_class_name = "IPv6 host config data",
+		{ attname="IP options", length=1, setbycreate=false },
+		{ attname="MAC address", length=6, setbycreate=false },
+		{ attname="IPv6 link local address", length=16, setbycreate=false },
+		{ attname="IPv6 address", length=16, setbycreate=false },
+		{ attname="Default router", length=16, setbycreate=false },
+		{ attname="Primary DNS", length=16, setbycreate=false },
+		{ attname="Secondary DNS", length=16, setbycreate=false },
+		{ attname="Current address table", length=24, setbycreate=false },
+		{ attname="Current default router table", length=16, setbycreate=false },
+		{ attname="Current DNS table", length=16, setbycreate=false },
+		{ attname="DUID", length=25, setbycreate=false },
+		{ attname="On-link prefix", length=17, setbycreate=false },
+		{ attname="Current on-link prefix table", length=26, setbycreate=false },
+		{ attname="Relay agent options", length=2, setbycreate=false },
 	},
 }
 
@@ -1604,4 +1681,6 @@ end
 
 -- Register the dissector
 local ether_table = DissectorTable.get( "ethertype" )
-ether_table:add(0x88B5, omciproto) 
+ether_table:add(0x8888, omciproto) 
+ether_table:add(0x88b5, omciproto) 
+
