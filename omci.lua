@@ -1416,7 +1416,6 @@ f.msg_type_mt = ProtoField.uint8("omciproto.msg_type_mt", "Message Type", base.D
 f.dev_id = ProtoField.uint8("omciproto.dev_id", "Device Identifier", base.HEX)
 f.me_id = ProtoField.uint16("omciproto.me_id", "Managed Entity Instance", base.HEX)
 f.me_class = ProtoField.uint16("omciproto.me_class", "Managed Entity Class", base.DEC) 
-f.me_class_str = ProtoField.string("omciproto.me_class_str", "Managed Entity Class") 
 f.attribute_mask = ProtoField.uint16("omciproto.attribtute_mask", "Attribute Mask", base.HEX, nil, 0xFFFF)
 f.attribute = ProtoField.bytes("omciproto.attribute", "Attribute")
 f.content = ProtoField.bytes("omciproto.content", "Message Content")
@@ -1464,8 +1463,7 @@ function omciproto.dissector (buffer, pinfo, tree)
 	local me_class_name = omci_def[me_class:uint()].me_class_name
 	
 	local devid_subtree = subtree:add(buffer(offset, 4), "Message Identifier, ME Class = " .. me_class_name .. ", Instance = 0x" .. me_instance)
---	devid_subtree:add(f.me_class, me_class)
-	devid_subtree:add(f.me_class_str, me_class_name .. " (" .. me_class:uint() .. ")")
+	devid_subtree:add(f.me_class,  me_class:uint())
 	devid_subtree:add(f.me_id, me_instance)
 	offset = offset +  4
 	
