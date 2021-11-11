@@ -1682,5 +1682,4 @@ end
 -- Register the dissector
 local ether_table = DissectorTable.get( "ethertype" )
 ether_table:add(0x8888, omciproto) 
-ether_table:add(0x88b5, omciproto) 
 
