@@ -1030,6 +1030,9 @@ local omci_def = {
 		{ attname="Relay agent options", length=2, setbycreate=false },
 	},
 
+	[137] = { me_class_name = "Network address",
+		{ attname="Security pointer", length=2, setbycreate=true },
+		{ attname="Address pointer", length=2, setbycreate=true }},
 
 	[140] = { me_class_name = "Call control performance monitoring history data",
 		{ attname="Interval end time", length=1, setbycreate=false },
@@ -1038,6 +1041,10 @@ local omci_def = {
 	[144] = { me_class_name = "RTP performance monitoring history data",
 		{ attname="Interval end time", length=1, setbycreate=false },
 		{ attname="Threshold data 1 ID", length=2, setbycreate=true }},
+
+	[157] = { me_class_name = "Large string",
+		{ attname="Number of parts", length=1, setbycreate=true },
+		{ attname="Part 1", length=25, setbycreate=false }},
 
 	[158] = { me_class_name = "ONU remote debug",
 		{ attname="Command format", length=1, setbycreate=false },
