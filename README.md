@@ -60,3 +60,15 @@ gen_hexdump -i omciPackets.log -o omciPackets.hex
 https://gist.github.com/shadansari/4159cf94dfc629d41215a844bd6ad1e7
 https://wiki.wireshark.org/Contrib#Protocol_Dissectors
 https://ask.wireshark.org/question/4557/bindechexlua-error-bad-argument-to-module-packageseeall/?answer=4573#post-id-4573
+https://github.com/ballzb/omci-wireshark-dissector/
+
+### TL;DR
+Compile: g++ -Wall -std=c++0x -o gen_hexdump gen_hexdump.cpp
+
+Convert: ./gen_hexdump -i exampleOmciPackets.log -o omci.hex
+
+Wireshark:
+File -> Import from Hex Dump  
+Browse -> omci.hex  
+Encapsulation Type -> Ethernet  
+Ethernet -> Ethertype (hex): 8888
