@@ -82,7 +82,8 @@ local msgtype = {
 	[25]="Reboot",
 	[26]="Get Next",
 	[27]="Test Result",
-	[28]="Get Current Data"
+	[28]="Get Current Data",
+	[29]="Set Table"
 }
 setmetatable(msgtype, msgtype_meta)
 
@@ -102,6 +103,7 @@ local msg_result= {
 	[4] = "Unknown managed entity",
 	[5] = "Unknown managed entity instance",
 	[6] = "Device busy",
+	[7] = "Instance exists",
 	[9] = "Attribute failed or unknown"
 }
 setmetatable(msg_result, msg_result_meta)
@@ -125,14 +127,680 @@ setmetatable(test_message_name, test_message_name_meta)
 local mt2 = {
   __index = function(t2, k)   
 	local returntable = {}
-	if k >= 172 and k <= 239 then
-		returntable.me_class_name= "Reserved for future B-PON managed entities"
+	if k == 1 then
+		returntable.me_class_name= "ONTB-PON"
+	elseif k ==   2	then
+		returntable.me_class_name= "ONU data"
+	elseif k ==   3	then
+		returntable.me_class_name= "PON IF line cardholder"
+	elseif k ==   4	then
+		returntable.me_class_name= "PON IF line card"
+	elseif k ==   5	then
+		returntable.me_class_name = "Cardholder"
+	elseif k ==   6	then
+		returntable.me_class_name = "Circuit pack"
+	elseif k ==   7	then
+		returntable.me_class_name = "Software image"
+	elseif k ==   8	then
+		returntable.me_class_name = "UNIB-PON"
+	elseif k ==   9	then
+		returntable.me_class_name = "TC AdapterB-PON"
+	elseif k ==  10	then
+		returntable.me_class_name = "Physical path termination point ATM UNI"
+	elseif k ==  11	then
+		returntable.me_class_name = "Physical path termination point Ethernet UNI"
+	elseif k ==  12	then
+		returntable.me_class_name = "Physical path termination point CES UNI"
+	elseif k ==  13	then
+		returntable.me_class_name = "Logical N  64 kbit/s sub-port connection termination point"
+	elseif k ==  14	then
+		returntable.me_class_name = "Interworking VCC termination point"
+	elseif k ==  15	then
+		returntable.me_class_name = "AAL1 profileB-PON"
+	elseif k ==  16	then
+		returntable.me_class_name = "AAL5 profile"
+	elseif k ==  17	then
+		returntable.me_class_name = "AAL1 protocol monitoring history dataB-PON"
+	elseif k ==  18	then
+		returntable.me_class_name = "AAL5 performance monitoring history data"
+	elseif k ==  19	then
+		returntable.me_class_name = "AAL2 profile"
+	elseif k ==  20	then
+		returntable.me_class_name = "Intentionally left blank)"
+	elseif k ==  21	then
+		returntable.me_class_name = "CES service profile"
+	elseif k ==  22	then
+		returntable.me_class_name = "Reserved)"
+	elseif k ==  23	then
+		returntable.me_class_name = "CES physical interface performance monitoring history data"
+	elseif k ==  24	then
+		returntable.me_class_name = "Ethernet performance monitoring history data"
+	elseif k ==  25	then
+		returntable.me_class_name = "VP network CTPBPON"
+	elseif k ==  26	then
+		returntable.me_class_name = "ATM VP cross-connection"
+	elseif k ==  27	then
+		returntable.me_class_name = "Priority queueB-PON"
+	elseif k ==  28	then
+		returntable.me_class_name = "DBR/CBR traffic descriptor"
+	elseif k ==  29	then
+		returntable.me_class_name = "UBR traffic descriptor"
+	elseif k ==  30	then
+		returntable.me_class_name = "SBR1/VBR1 traffic descriptor"
+	elseif k ==  31	then
+		returntable.me_class_name = "SBR2/VBR2 traffic descriptor"
+	elseif k ==  32	then
+		returntable.me_class_name = "SBR3/VBR3 traffic descriptor"
+	elseif k ==  33	then
+		returntable.me_class_name = "ABR traffic descriptor"
+	elseif k ==  34	then
+		returntable.me_class_name = "GFR traffic descriptor"
+	elseif k ==  35	then
+		returntable.me_class_name = "ABT/DT/IT traffic descriptor"
+	elseif k ==  36	then
+		returntable.me_class_name = "UPC disagreement monitoring history dataB-PON"
+	elseif k ==  37	then
+		returntable.me_class_name = "Intentionally left blank)"
+	elseif k ==  38	then
+		returntable.me_class_name = "ANI (B-PON)"
+	elseif k ==  39	then
+		returntable.me_class_name = "PON TC adapter"
+	elseif k ==  40	then
+		returntable.me_class_name = "PON physical path termination point"
+	elseif k ==  41	then
+		returntable.me_class_name = "TC adapter protocol monitoring history data"
+	elseif k ==  42	then
+		returntable.me_class_name = "Threshold dataB-PON"
+	elseif k ==  43	then
+		returntable.me_class_name = "Operator specific"
+	elseif k ==  44	then
+		returntable.me_class_name = "Vendor specific"
+	elseif k ==  45	then
+		returntable.me_class_name = "MAC bridge service profile"
+	elseif k ==  46	then
+		returntable.me_class_name = "MAC bridge configuration data"
+	elseif k ==  47	then
+		returntable.me_class_name = "MAC bridge port configuration data"
+	elseif k ==  48	then
+		returntable.me_class_name = "MAC bridge port designation data"
+	elseif k ==  49	then
+		returntable.me_class_name = "MAC bridge port filter table data"
+	elseif k ==  50	then
+		returntable.me_class_name = "MAC bridge port bridge table data"
+	elseif k ==  51	then
+		returntable.me_class_name = "MAC bridge performance monitoring history data"
+	elseif k ==  52	then
+		returntable.me_class_name = "MAC bridge port performance monitoring history data"
+	elseif k ==  53	then
+		returntable.me_class_name = "Physical path termination point POTS UNI"
+	elseif k ==  54	then
+		returntable.me_class_name = "Voice CTP"
+	elseif k ==  55	then
+		returntable.me_class_name = "Voice PM history data"
+	elseif k ==  56	then
+		returntable.me_class_name = "AAL2 PVC profileB-PON"
+	elseif k ==  57	then
+		returntable.me_class_name = "AAL2 CPS protocol monitoring history dataB-PON"
+	elseif k ==  58	then
+		returntable.me_class_name = "Voice service profile"
+	elseif k ==  59	then
+		returntable.me_class_name = "LES service profile"
+	elseif k ==  60	then
+		returntable.me_class_name = "AAL2 SSCS parameter profile1"
+	elseif k ==  61	then
+		returntable.me_class_name = "AAL2 SSCS parameter profile2"
+	elseif k ==  62	then
+		returntable.me_class_name = "VP performance monitoring history data"
+	elseif k ==  63	then
+		returntable.me_class_name = "Traffic schedulerB-PON"
+	elseif k ==  64	then
+		returntable.me_class_name = "T-CONT buffer"
+	elseif k ==  65	then
+		returntable.me_class_name = "UBR+ traffic descriptor"
+	elseif k ==  66	then
+		returntable.me_class_name = "AAL2 SSCS protocol monitoring history dataB-PON"
+	elseif k ==  67	then
+		returntable.me_class_name = "IP port configuration data"
+	elseif k ==  68	then
+		returntable.me_class_name = "IP router service profile"
+	elseif k ==  69	then
+		returntable.me_class_name = "IP router configuration data"
+	elseif k ==  70	then
+		returntable.me_class_name = "IP router performance monitoring history data 1"
+	elseif k ==  71	then
+		returntable.me_class_name = "IP router performance monitoring history data 2"
+	elseif k ==  72	then
+		returntable.me_class_name = "ICMP performance monitoring history data 1"
+	elseif k ==  73	then
+		returntable.me_class_name = "ICMP performance monitoring history data 2"
+	elseif k ==  74	then
+		returntable.me_class_name = "IP route table"
+	elseif k ==  75	then
+		returntable.me_class_name = "IP static routes"
+	elseif k ==  76	then
+		returntable.me_class_name = "ARP service profile"
+	elseif k ==  77	then
+		returntable.me_class_name = "ARP configuration data"
+	elseif k ==  78	then
+		returntable.me_class_name = "VLAN tagging operation configuration data"
+	elseif k ==  79	then
+		returntable.me_class_name = "MAC bridge port filter pre-assign table"
+	elseif k ==  80	then
+		returntable.me_class_name = "Physical path termination point ISDN UNI"
+	elseif k ==  81	then
+		returntable.me_class_name = "(Reserved)"
+	elseif k ==  82	then
+		returntable.me_class_name = "Physical path termination point video UNI"
+	elseif k ==  83	then
+		returntable.me_class_name = "Physical path termination point LCT UNI"
+	elseif k ==  84	then
+		returntable.me_class_name = "VLAN tagging filter data"
+	elseif k ==  85	then
+		returntable.me_class_name = "ONUB-PON"
+	elseif k ==  86	then
+		returntable.me_class_name = "ATM VC cross-connection"
+	elseif k ==  87	then
+		returntable.me_class_name = "VC network CTPB-PON"
+	elseif k ==  88	then
+		returntable.me_class_name = "VC PM history data"
+	elseif k ==  89	then
+		returntable.me_class_name = "Ethernet performance monitoring history data 2"
+	elseif k ==  90	then
+		returntable.me_class_name = "Physical path termination point video ANI"
+	elseif k ==  91	then
+		returntable.me_class_name = "Physical path termination point IEEE 802.11 UNI"
+	elseif k ==  92	then
+		returntable.me_class_name = "IEEE 802.11 station management data 1"
+	elseif k ==  93	then
+		returntable.me_class_name = "IEEE 802.11 station management data 2"
+	elseif k ==  94	then
+		returntable.me_class_name = "IEEE 802.11 general purpose object"
+	elseif k ==  95	then
+		returntable.me_class_name = "IEEE 802.11 MAC and PHY operation and antenna data"
+	elseif k ==  96	then
+		returntable.me_class_name = "IEEE 802.11 performance monitoring history data"
+	elseif k ==  97	then
+		returntable.me_class_name = "IEEE 802.11 PHY FHSS DSSS IR tables"
+	elseif k ==  98	then
+		returntable.me_class_name = "Physical path termination point xDSL UNI part 1"
+	elseif k ==  99	then
+		returntable.me_class_name = "Physical path termination point xDSL UNI part 2"
+	elseif k == 100	then
+		returntable.me_class_name = "xDSL line inventory and status data part 1"
+	elseif k == 101	then
+		returntable.me_class_name = "xDSL line inventory and status data part 2"
+	elseif k == 102	then
+		returntable.me_class_name = "xDSL channel downstream status data"
+	elseif k == 103	then
+		returntable.me_class_name = "xDSL channel upstream status data"
+	elseif k == 104	then
+		returntable.me_class_name = "xDSL line configuration profile part 1"
+	elseif k == 105	then
+		returntable.me_class_name = "xDSL line configuration profile part 2"
+	elseif k == 106	then
+		returntable.me_class_name = "xDSL line configuration profile part 3"
+	elseif k == 107	then
+		returntable.me_class_name = "xDSL channel configuration profile"
+	elseif k == 108	then
+		returntable.me_class_name = "xDSL subcarrier masking downstream profile"
+	elseif k == 109	then
+		returntable.me_class_name = "xDSL subcarrier masking upstream profile"
+	elseif k == 110	then
+		returntable.me_class_name = "xDSL PSD mask profile"
+	elseif k == 111	then
+		returntable.me_class_name = "xDSL downstream RFI bands profile"
+	elseif k == 112	then
+		returntable.me_class_name = "xDSL xTU-C performance monitoring history data part 1"
+	elseif k == 113	then
+		returntable.me_class_name = "xDSL xTU-R performance monitoring history data"
+	elseif k == 114	then
+		returntable.me_class_name = "xDSL xTU-C channel performance monitoring history data"
+	elseif k == 115	then
+		returntable.me_class_name = "xDSL xTU-R channel performance monitoring history data"
+	elseif k == 116	then
+		returntable.me_class_name = "TC adaptor performance monitoring history data xDSL"
+	elseif k == 117	then
+		returntable.me_class_name = "Physical path termination point VDSL UNI (ITU-T G.993.1 VDSL1)"
+	elseif k == 118	then
+		returntable.me_class_name = "VDSL VTU-O physical data"
+	elseif k == 119	then
+		returntable.me_class_name = "VDSL VTU-R physical data"
+	elseif k == 120	then
+		returntable.me_class_name = "VDSL channel data"
+	elseif k == 121	then
+		returntable.me_class_name = "VDSL line configuration profile"
+	elseif k == 122	then
+		returntable.me_class_name = "VDSL channel configuration profile"
+	elseif k == 123	then
+		returntable.me_class_name = "VDSL band plan configuration profile"
+	elseif k == 124	then
+		returntable.me_class_name = "VDSL VTU-O physical interface monitoring history data"
+	elseif k == 125	then
+		returntable.me_class_name = "VDSL VTU-R physical interface monitoring history data"
+	elseif k == 126	then
+		returntable.me_class_name = "VDSL VTU-O channel performance monitoring history data"
+	elseif k == 127	then
+		returntable.me_class_name = "VDSL VTU-R channel performance monitoring history data"
+	elseif k == 128	then
+		returntable.me_class_name = "Video return path service profile"
+	elseif k == 129	then
+		returntable.me_class_name = "Video return path performance monitoring history data"
+	elseif k == 130	then
+		returntable.me_class_name = "IEEE 802.1p mapper service profile"
+	elseif k == 131	then
+		returntable.me_class_name = "OLT-G"
+	elseif k == 132	then
+		returntable.me_class_name = "Multicast interworking VCC termination point"
+	elseif k == 133	then
+		returntable.me_class_name = "ONU power shedding"
+	elseif k == 134	then
+		returntable.me_class_name = "IP host config data"
+	elseif k == 135	then
+		returntable.me_class_name = "IP host performance monitoring history data"
+	elseif k == 136	then
+		returntable.me_class_name = "TCP/UDP config data"
+	elseif k == 137	then
+		returntable.me_class_name = "Network address"
+	elseif k == 138	then
+		returntable.me_class_name = "VoIP config data"
+	elseif k == 139	then
+		returntable.me_class_name = "VoIP voice CTP"
+	elseif k == 140	then
+		returntable.me_class_name = "Call control performance monitoring history data"
+	elseif k == 141	then
+		returntable.me_class_name = "VoIP line status"
+	elseif k == 142	then
+		returntable.me_class_name = "VoIP media profile"
+	elseif k == 143	then
+		returntable.me_class_name = "RTP profile data"
+	elseif k == 144	then
+		returntable.me_class_name = "RTP performance monitoring history data"
+	elseif k == 145	then
+		returntable.me_class_name = "Network dial plan table"
+	elseif k == 146	then
+		returntable.me_class_name = "VoIP application service profile"
+	elseif k == 147	then
+		returntable.me_class_name = "VoIP feature access codes"
+	elseif k == 148	then
+		returntable.me_class_name = "Authentication security method"
+	elseif k == 149	then
+		returntable.me_class_name = "SIP config portal"
+	elseif k == 150	then
+		returntable.me_class_name = "SIP agent config data"
+	elseif k == 151	then
+		returntable.me_class_name = "SIP agent performance monitoring history data"
+	elseif k == 152	then
+		returntable.me_class_name = "SIP call initiation performance monitoring history data"
+	elseif k == 153	then
+		returntable.me_class_name = "SIP user data"
+	elseif k == 154	then
+		returntable.me_class_name = "MGC config portal"
+	elseif k == 155	then
+		returntable.me_class_name = "MGC config data"
+	elseif k == 156	then
+		returntable.me_class_name = "MGC performance monitoring history data"
+	elseif k == 157	then
+		returntable.me_class_name = "Large string"
+	elseif k == 158	then
+		returntable.me_class_name = "ONU remote debug"
+	elseif k == 159	then
+		returntable.me_class_name = "Equipment protection profile"
+	elseif k == 160	then
+		returntable.me_class_name = "Equipment extension package"
+	elseif k == 161	then
+		returntable.me_class_name = "Port-mapping packageBPON (B-PON only; use 297 for G-PON)"
+	elseif k == 162	then
+		returntable.me_class_name = "Physical path termination point MoCA UNI"
+	elseif k == 163	then
+		returntable.me_class_name = "MoCA Ethernet performance monitoring history data"
+	elseif k == 164	then
+		returntable.me_class_name = "MoCA interface performance monitoring history data"
+	elseif k == 165	then
+		returntable.me_class_name = "VDSL2 line configuration extensions"
+	elseif k == 166	then
+		returntable.me_class_name = "xDSL line inventory and status data part 3"
+	elseif k == 167	then
+		returntable.me_class_name = "xDSL line inventory and status data part 4"
+	elseif k == 168	then
+		returntable.me_class_name = "VDSL2 line inventory and status data part 1"
+	elseif k == 169	then
+		returntable.me_class_name = "VDSL2 line inventory and status data part 2"
+	elseif k == 170	then
+		returntable.me_class_name = "VDSL2 line inventory and status data part 3"
+	elseif k == 171	then
+		returntable.me_class_name = "Extended VLAN tagging operation configuration data"
+	elseif k >= 172	and k <= 239 then
+		returntable.me_class_name = "239 Reserved for future B-PON managed entities"
 	elseif k >= 240 and k <= 255 then
-		returntable.me_class_name= "Reserved for vendor-specific managed entities"
-   	elseif k >= 343 and k <= 65279 then 
-		returntable.me_class_name= "Reserved for future standardization" 
-	elseif k >= 65280 and k <= 65535 then 
-		returntable.me_class_name= "Reserved for vendor-specific use"
+		returntable.me_class_name = "255 Reserved for vendor-specific managed entities"
+	elseif k == 256	then
+		returntable.me_class_name = "ONU-G (NOTE – In [ITU-T G.984.4] this was called ONT-G)"
+	elseif k == 257	then
+		returntable.me_class_name = "ONU2-G (NOTE – In [ITU-T G.984.4] this was called ONT2-G)"
+	elseif k == 258	then
+		returntable.me_class_name = "ONU-G (deprecated – note that the name is re-used for code point 256)"
+	elseif k == 259	then
+		returntable.me_class_name = "ONU2-G (deprecated – note that the name is re-used for code point 257)"
+	elseif k == 260	then
+		returntable.me_class_name = "PON IF line card-G"
+	elseif k == 261	then
+		returntable.me_class_name = "PON TC adapter-G"
+	elseif k == 262	then
+		returntable.me_class_name = "T-CONT"
+	elseif k == 263	then
+		returntable.me_class_name = "ANI-G"
+	elseif k == 264	then
+		returntable.me_class_name = "UNI-G"
+	elseif k == 265	then
+		returntable.me_class_name = "ATM interworking VCC termination point"
+	elseif k == 266	then
+		returntable.me_class_name = "GEM interworking termination point"
+	elseif k == 267	then
+		returntable.me_class_name = "GEM port performance monitoring history data (obsolete)"
+	elseif k == 268	then
+		returntable.me_class_name = "GEM port network CTP"
+	elseif k == 269	then
+		returntable.me_class_name = "VP network CTP"
+	elseif k == 270	then
+		returntable.me_class_name = "VC network CTP-G"
+	elseif k == 271	then
+		returntable.me_class_name = "GAL TDM profile (deprecated)"
+	elseif k == 272	then
+		returntable.me_class_name = "GAL Ethernet profile"
+	elseif k == 273	then
+		returntable.me_class_name = "Threshold data 1"
+	elseif k == 274	then
+		returntable.me_class_name = "Threshold data 2"
+	elseif k == 275	then
+		returntable.me_class_name = "GAL TDM performance monitoring history data (deprecated)"
+	elseif k == 276	then
+		returntable.me_class_name = "GAL Ethernet performance monitoring history data"
+	elseif k == 277	then
+		returntable.me_class_name = "Priority queue"
+	elseif k == 278	then
+		returntable.me_class_name = "Traffic scheduler"
+	elseif k == 279	then
+		returntable.me_class_name = "Protection data"
+	elseif k == 280	then
+		returntable.me_class_name = "Traffic descriptor"
+	elseif k == 281	then
+		returntable.me_class_name = "Multicast GEM interworking termination point"
+	elseif k == 282	then
+		returntable.me_class_name = "Pseudowire termination point"
+	elseif k == 283	then
+		returntable.me_class_name = "RTP pseudowire parameters"
+	elseif k == 284	then
+		returntable.me_class_name = "Pseudowire maintenance profile"
+	elseif k == 285	then
+		returntable.me_class_name = "Pseudowire performance monitoring history data"
+	elseif k == 286	then
+		returntable.me_class_name = "Ethernet flow termination point"
+	elseif k == 287	then
+		returntable.me_class_name = "OMCI"
+	elseif k == 288	then
+		returntable.me_class_name = "Managed entity"
+	elseif k == 289	then
+		returntable.me_class_name = "Attribute"
+	elseif k == 290	then
+		returntable.me_class_name = "Dot1X port extension package"
+	elseif k == 291	then
+		returntable.me_class_name = "Dot1X configuration profile"
+	elseif k == 292	then
+		returntable.me_class_name = "Dot1X performance monitoring history data"
+	elseif k == 293	then
+		returntable.me_class_name = "Radius performance monitoring history data"
+	elseif k == 294	then
+		returntable.me_class_name = "TU CTP"
+	elseif k == 295	then
+		returntable.me_class_name = "TU performance monitoring history data"
+	elseif k == 296	then
+		returntable.me_class_name = "Ethernet performance monitoring history data 3"
+	elseif k == 297	then
+		returntable.me_class_name = "Port-mapping package"
+	elseif k == 298	then
+		returntable.me_class_name = "Dot1 rate limiter"
+	elseif k == 299	then
+		returntable.me_class_name = "Dot1ag maintenance domain"
+	elseif k == 300	then
+		returntable.me_class_name = "Dot1ag maintenance association"
+	elseif k == 301	then
+		returntable.me_class_name = "Dot1ag default MD level"
+	elseif k == 302	then
+		returntable.me_class_name = "Dot1ag MEP"
+	elseif k == 303	then
+		returntable.me_class_name = "Dot1ag MEP status"
+	elseif k == 304	then
+		returntable.me_class_name = "Dot1ag MEP CCM database"
+	elseif k == 305	then
+		returntable.me_class_name = "Dot1ag CFM stack"
+	elseif k == 306	then
+		returntable.me_class_name = "Dot1ag chassis-management info"
+	elseif k == 307	then
+		returntable.me_class_name = "Octet string"
+	elseif k == 308	then
+		returntable.me_class_name = "General purpose buffer"
+	elseif k == 309	then
+		returntable.me_class_name = "Multicast operations profile"
+	elseif k == 310	then
+		returntable.me_class_name = "Multicast subscriber config info"
+	elseif k == 311	then
+		returntable.me_class_name = "Multicast subscriber monitor"
+	elseif k == 312	then
+		returntable.me_class_name = "FEC performance monitoring history data"
+	elseif k == 313	then
+		returntable.me_class_name = "RE ANI-G"
+	elseif k == 314	then
+		returntable.me_class_name = "Physical path termination point RE UNI"
+	elseif k == 315	then
+		returntable.me_class_name = "RE upstream amplifier"
+	elseif k == 316	then
+		returntable.me_class_name = "RE downstream amplifier"
+	elseif k == 317	then
+		returntable.me_class_name = "RE config portal"
+	elseif k == 318	then
+		returntable.me_class_name = "File transfer controller"
+	elseif k == 319	then
+		returntable.me_class_name = "CES physical interface performance monitoring history data 2"
+	elseif k == 320	then
+		returntable.me_class_name = "CES physical interface performance monitoring history data 3"
+	elseif k == 321	then
+		returntable.me_class_name = "Ethernet frame performance monitoring history data downstream"
+	elseif k == 322	then
+		returntable.me_class_name = "Ethernet frame performance monitoring history data upstream"
+	elseif k == 323	then
+		returntable.me_class_name = "VDSL2 line configuration extensions 2"
+	elseif k == 324	then
+		returntable.me_class_name = "xDSL impulse noise monitor performance monitoring history data"
+	elseif k == 325	then
+		returntable.me_class_name = "xDSL line inventory and status data part 5"
+	elseif k == 326	then
+		returntable.me_class_name = "xDSL line inventory and status data part 6"
+	elseif k == 327	then
+		returntable.me_class_name = "xDSL line inventory and status data part 7"
+	elseif k == 328	then
+		returntable.me_class_name = "RE common amplifier parameters"
+	elseif k == 329	then
+		returntable.me_class_name = "Virtual Ethernet interface point"
+	elseif k == 330	then
+		returntable.me_class_name = "Generic status portal"
+	elseif k == 331	then
+		returntable.me_class_name = "ONU-E"
+	elseif k == 332	then
+		returntable.me_class_name = "Enhanced security control"
+	elseif k == 333	then
+		returntable.me_class_name = "MPLS pseudowire termination point"
+	elseif k == 334	then
+		returntable.me_class_name = "Ethernet frame extended PM"
+	elseif k == 335	then
+		returntable.me_class_name = "SNMP configuration data"
+	elseif k == 336	then
+		returntable.me_class_name = "ONU dynamic power management control"
+	elseif k == 337	then
+		returntable.me_class_name = "PW ATM configuration data"
+	elseif k == 338	then
+		returntable.me_class_name = "PW ATM performance monitoring history data"
+	elseif k == 339	then
+		returntable.me_class_name = "PW Ethernet configuration data"
+	elseif k == 340	then
+		returntable.me_class_name = "BBF TR-069 management server"
+	elseif k == 341	then
+		returntable.me_class_name = "GEM port network CTP performance monitoring history data"
+	elseif k == 342	then
+		returntable.me_class_name = "TCP/UDP performance monitoring history data"
+	elseif k == 343	then
+		returntable.me_class_name = "Energy consumption performance monitoring history data"
+	elseif k == 344	then
+		returntable.me_class_name = "XG-PON TC performance monitoring history data"
+	elseif k == 345	then
+		returntable.me_class_name = "XG-PON downstream management performance monitoring history data"
+	elseif k == 346	then
+		returntable.me_class_name = "XG-PON upstream management performance monitoring history data"
+	elseif k == 347	then
+		returntable.me_class_name = "IPv6 host config data"
+	elseif k == 348	then
+		returntable.me_class_name = "MAC bridge port ICMPv6 process pre-assign table"
+	elseif k == 349	then
+		returntable.me_class_name = "PoE control"
+	elseif k >= 350 and k <= 399 then
+		returntable.me_class_name = "Reserved for vendor-specific use"
+	elseif k == 400	then
+		returntable.me_class_name = "Ethernet pseudowire parameters"
+	elseif k == 401	then
+		returntable.me_class_name = "Physical path termination point RS232/RS485 UNI"
+	elseif k == 402	then
+		returntable.me_class_name = "RS232/RS485 port operation configuration data"
+	elseif k == 403	then
+		returntable.me_class_name = "RS232/RS485 performance monitoring history data"
+	elseif k == 404	then
+		returntable.me_class_name = "L2 multicast GEM interworking termination point"
+	elseif k == 405	then
+		returntable.me_class_name = "ANI-E"
+	elseif k == 406	then
+		returntable.me_class_name = "EPON downstream performance monitoring configuration"
+	elseif k == 407	then
+		returntable.me_class_name = "SIP agent config data 2"
+	elseif k == 408	then
+		returntable.me_class_name = "xDSL xTU-C performance monitoring history data part 2"
+	elseif k == 409	then
+		returntable.me_class_name = "PTM performance monitoring history data xDSL"
+	elseif k == 410	then
+		returntable.me_class_name = "VDSL2 line configuration extensions 3"
+	elseif k == 411	then
+		returntable.me_class_name = "Vectoring line configuration extensions"
+	elseif k == 412	then
+		returntable.me_class_name = "xDSL channel configuration profile part 2"
+	elseif k == 413	then
+		returntable.me_class_name = "xTU data gathering configuration"
+	elseif k == 414	then
+		returntable.me_class_name = "xDSL line inventory and status data part 8"
+	elseif k == 415	then
+		returntable.me_class_name = "VDSL2 line inventory and status data part 4"
+	elseif k == 416	then
+		returntable.me_class_name = "Vectoring line inventory and status data"
+	elseif k == 417	then
+		returntable.me_class_name = "Data gathering line test, diagnostic and status"
+	elseif k == 418	then
+		returntable.me_class_name = "EFM bonding group"
+	elseif k == 419	then
+		returntable.me_class_name = "EFM bonding link"
+	elseif k == 420	then
+		returntable.me_class_name = "EFM bonding group performance monitoring history data"
+	elseif k == 421	then
+		returntable.me_class_name = "EFM bonding group performance monitoring history data part 2"
+	elseif k == 422	then
+		returntable.me_class_name = "EFM bonding link performance monitoring history data"
+	elseif k == 423	then
+		returntable.me_class_name = "EFM bonding port performance monitoring history data"
+	elseif k == 424	then
+		returntable.me_class_name = "EFM bonding port performance monitoring history data part 2"
+	elseif k == 425	then
+		returntable.me_class_name = "Ethernet frame extended PM 64 bit"
+	elseif k == 426	then
+		returntable.me_class_name = "Threshold data 64 bit"
+	elseif k == 427	then
+		returntable.me_class_name = "Physical path termination point UNI part 3 (FAST)"
+	elseif k == 428	then
+		returntable.me_class_name = "FAST line configuration profile part 1"
+	elseif k == 429	then
+		returntable.me_class_name = "FAST line configuration profile part 2"
+	elseif k == 430	then
+		returntable.me_class_name = "FAST line configuration profile part 3"
+	elseif k == 431	then
+		returntable.me_class_name = "FAST line configuration profile part 4"
+	elseif k == 432	then
+		returntable.me_class_name = "FAST channel configuration profile, part 1"
+	elseif k == 433	then
+		returntable.me_class_name = "FAST data path configuration profile"
+	elseif k == 434	then
+		returntable.me_class_name = "FAST vectoring line configuration extensions"
+	elseif k == 435	then
+		returntable.me_class_name = "FAST line inventory and status data"
+	elseif k == 436	then
+		returntable.me_class_name = "FAST line inventory and status data part 2"
+	elseif k == 437	then
+		returntable.me_class_name = "FAST xTU-C performance monitoring history data"
+	elseif k == 438	then
+		returntable.me_class_name = "FAST xTU-R performance monitoring history data"
+	elseif k == 439	then
+		returntable.me_class_name = "OpenFlow config data"
+	elseif k == 440	then
+		returntable.me_class_name = "Time Status Message"
+	elseif k == 441	then
+		returntable.me_class_name = "ONU3-G"
+	elseif k == 442	then
+		returntable.me_class_name = "TWDM System Profile managed entity"
+	elseif k == 443	then
+		returntable.me_class_name = "TWDM channel managed entity"
+	elseif k == 444	then
+		returntable.me_class_name = "TWDM channel PHY/LODS performance monitoring history data"
+	elseif k == 445	then
+		returntable.me_class_name = "TWDM channel XGEM performance monitoring history data"
+	elseif k == 446	then
+		returntable.me_class_name = "TWDM channel PLOAM performance monitoring history data part 1"
+	elseif k == 447	then
+		returntable.me_class_name = "TWDM channel PLOAM performance monitoring history data part 2"
+	elseif k == 448	then
+		returntable.me_class_name = "TWDM channel PLOAM performance monitoring history data part 3"
+	elseif k == 449	then
+		returntable.me_class_name = "TWDM channel tuning performance monitoring history data part 1"
+	elseif k == 450	then
+		returntable.me_class_name = "TWDM channel tuning performance monitoring history data part 2"
+	elseif k == 451	then
+		returntable.me_class_name = "TWDM channel tuning performance monitoring history data part 3"
+	elseif k == 452	then
+		returntable.me_class_name = "TWDM channel OMCI performance monitoring history data"
+	elseif k == 453	then
+		returntable.me_class_name = "Enhanced FEC performance monitoring history data"
+	elseif k == 454	then
+		returntable.me_class_name = "Enhanced TC performance monitoring history data"
+	elseif k == 455	then
+		returntable.me_class_name = "Link aggregation service profile"
+	elseif k == 456	then
+		returntable.me_class_name = "ONU manufacturing data"
+	elseif k == 457	then
+		returntable.me_class_name = "ONU time configuration"
+	elseif k == 458	then
+		returntable.me_class_name = "IP host performance monitoring history data part 2"
+	elseif k == 459	then
+		returntable.me_class_name = "ONU operational performance monitoring history data"
+	elseif k == 460	then
+		returntable.me_class_name = "ONU4-G"
+	elseif k == 461	then
+		returntable.me_class_name = "BBF TR-369 USP agent"
+	elseif k == 462	then
+		returntable.me_class_name = "FAST channel configuration profile, part 2"
+	elseif k == 463	then
+		returntable.me_class_name = "FAST line failures performance monitoring data"
+	elseif k == 464	then
+		returntable.me_class_name = "Synchronous Ethernet operation"
+	elseif k == 465	then
+		returntable.me_class_name = "Precision Time Protocol"
+	elseif k == 466	then
+		returntable.me_class_name = "Precision Time Protocol status"
+	elseif k >= 467 and k <= 65279	then
+		returntable.me_class_name = "Reserved for future standardization"
+	elseif k >= 65280 and k <= 65535 then
+		returntable.me_class_name = "Reserved for vendor-specific use"
 	else
 		returntable.me_class_name= "***TBD*** (" .. k .. ")"
     end
