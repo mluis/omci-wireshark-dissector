@@ -51,7 +51,7 @@ end
 
 local msgtype_meta = {
   __index = function(t, k)   
-    if k < 4 or k > 28 then
+    if k < 4 or k > 29 then
       return "Reserved"
     end
   end
@@ -89,7 +89,7 @@ setmetatable(msgtype, msgtype_meta)
 
 local msg_result_meta = {
   __index = function(t, k)   
-    if k == 7 or k == 8 or k > 9 then
+    if k == 8 or k > 9 then
       return "Unknown"
     end
   end
@@ -472,7 +472,7 @@ local mt2 = {
 	elseif k >= 172	and k <= 239 then
 		returntable.me_class_name = "239 Reserved for future B-PON managed entities"
 	elseif k >= 240 and k <= 255 then
-		returntable.me_class_name = "255 Reserved for vendor-specific managed entities"
+		returntable.me_class_name = "Reserved for vendor-specific managed entities"
 	elseif k == 256	then
 		returntable.me_class_name = "ONU-G (NOTE – In [ITU-T G.984.4] this was called ONT-G)"
 	elseif k == 257	then
